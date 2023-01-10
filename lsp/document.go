@@ -1,6 +1,9 @@
 package lsp
 
-import "github.com/pulumi/pulumi-lsp/sdk/lsp"
+import (
+	"github.com/JosephNaberhaus/agnostic/language/lexer"
+	"github.com/pulumi/pulumi-lsp/sdk/lsp"
+)
 
 type document struct {
 	text   lsp.Document
@@ -8,5 +11,11 @@ type document struct {
 }
 
 func (d *document) process(client lsp.Client) {
-	// TODO: process file with Agnostic lexer/parser
+	ast, err := lexer.Test(d.text.String())
+	if err != nil {
+		_ = client.LogErrorf("failed to parse document: %w", err)
+		return
+	}
+
+	_ = client.LogInfof("Document parsed/lexed. Module name: %s", ast.Name)
 }
