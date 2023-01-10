@@ -1,3 +1,5 @@
+github.com/JosephNaberhaus/agnostic v0.0.0-20220322225351-241d33f7dea1 h1:UnZr7epxL5Er27afi4tooXGkrc+uQQ313H4CM4Z30c8=
+github.com/JosephNaberhaus/agnostic v0.0.0-20220322225351-241d33f7dea1/go.mod h1:aIFvgAl0Z7qu8LIWKCpI2fsOegoAZmp10ype2EYmkvo=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
