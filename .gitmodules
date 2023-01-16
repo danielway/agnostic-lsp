@@ -1,3 +1,4 @@
 [submodule "agnostic"]
 	path = agnostic
-	url = git@github.com:JosephNaberhaus/agnostic.git
+	url = git@github.com:danielway/agnostic-tokens.git
+	branch = v2
