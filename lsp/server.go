@@ -60,12 +60,47 @@ func (s *server) didChange(client lsp.Client, params *protocol.DidChangeTextDocu
 }
 
 func (s *server) semanticTokens(
-	client lsp.Client,
+	_ lsp.Client,
 	params *protocol.SemanticTokensParams,
 ) (result *protocol.SemanticTokens, err error) {
-	var data []uint32
+	uri := params.TextDocument.URI
+	document, ok := s.getDocument(uri)
+	if !ok {
+		return nil, fmt.Errorf("open document not found %s", uri.Filename())
+	}
 
-	// TODO: populate `data`
+	// [ lineDelta, charDelta(rel to prev start same line), length, type, modifiers, ... ]
+	data := make([]uint32, 0, len(document.tokens)*5)
 
+	previousLine := 0
+	previousStart := 0
+	for _, token := range document.tokens {
+		line := document.getCharLine(token.Start)
+
+		// Compute the line delta (how many lines this token is past the previous)
+		data = append(data, uint32(line-previousLine))
+
+		// If we're on a new line, reset the start-character delta
+		if line > previousLine {
+			previousStart = token.Start
+		}
+
+		previousLine = line
+
+		// Compute the start-character delta
+		data = append(data, uint32(token.Start-previousStart))
+		previousStart = token.Start
+
+		// Compute the token's length
+		data = append(data, uint32(token.End-token.Start))
+
+		// Token type (keyword, function, etc)
+		data = append(data, uint32(token.Kind))
+
+		// Token modifiers (static, const, etc)
+		data = append(data, 0)
+	}
+
+	// TODO: endian
 	return &protocol.SemanticTokens{Data: data}, nil
 }
