@@ -58,3 +58,14 @@ func (s *server) didChange(client lsp.Client, params *protocol.DidChangeTextDocu
 	doc.process(client)
 	return nil
 }
+
+func (s *server) semanticTokens(
+	client lsp.Client,
+	params *protocol.SemanticTokensParams,
+) (result *protocol.SemanticTokens, err error) {
+	var data []uint32
+
+	// TODO: populate `data`
+
+	return &protocol.SemanticTokens{Data: data}, nil
+}
