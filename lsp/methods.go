@@ -24,8 +24,15 @@ func Methods() *lsp.Methods {
 					OpenClose: methods.DidOpenFunc != nil || methods.DidCloseFunc != nil,
 					Change:    protocol.TextDocumentSyncKindFull,
 				},
-				SemanticTokensProvider: &protocol.SemanticTokensOptions{
-					// TODO: configure
+				SemanticTokensProvider: &SemanticTokensOptions{
+					Types: []string{
+						// See `lexer.TokenKind`
+						`keyword`,
+						`type`,
+						`module`,
+						`function`,
+						`comment`,
+					},
 				},
 			},
 			ServerInfo: &protocol.ServerInfo{
@@ -36,4 +43,8 @@ func Methods() *lsp.Methods {
 	}
 
 	return &methods
+}
+
+type SemanticTokensOptions struct {
+	Types []string `json:"tokenTypes"`
 }
