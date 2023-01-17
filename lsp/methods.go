@@ -25,13 +25,16 @@ func Methods() *lsp.Methods {
 					Change:    protocol.TextDocumentSyncKindFull,
 				},
 				SemanticTokensProvider: &SemanticTokensOptions{
-					Types: []string{
-						// See `lexer.TokenKind`
-						`keyword`,
-						`type`,
-						`module`,
-						`function`,
-						`comment`,
+					Full: true,
+					Legend: SemanticTokensLegend{
+						Types: []string{
+							// See: `lexer.TokenKind`
+							`keyword`,
+							`type`,
+							`module`,
+							`function`,
+							`comment`,
+						},
 					},
 				},
 			},
@@ -46,5 +49,10 @@ func Methods() *lsp.Methods {
 }
 
 type SemanticTokensOptions struct {
+	Legend SemanticTokensLegend `json:"legend"`
+	Full   bool                 `json:"full"`
+}
+
+type SemanticTokensLegend struct {
 	Types []string `json:"tokenTypes"`
 }
