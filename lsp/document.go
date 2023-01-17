@@ -11,7 +11,7 @@ type document struct {
 }
 
 func (d *document) process(client lsp.Client) {
-	ast, err := lexer.Test(d.text.String())
+	ast, _, err := lexer.Parse(d.text.String())
 	if err != nil {
 		_ = client.LogErrorf("failed to parse document: %w", err)
 		return
